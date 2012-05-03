@@ -1,0 +1,12 @@
+source "git+https://github.com/LuaDist/lsqlite3.git"
+description "A binding for Lua to the SQLite3 database library"
+detail "lsqlite3 is a thin wrapper around the public domain SQLite3 database engine. "
+detail "The lsqlite3 module supports the creation and manipulation of SQLite3 databases. "
+detail "After a require('lsqlite3') the exported functions are called with prefix sqlite3. "
+detail "However, most sqlite3 functions are called via an object-oriented interface to "
+detail "either database or SQL statement objects."
+license "MIT/X11",
+homepage "http://lua.sqlite.org/"
+depend "lua >= 5.1"
+LDFLAGS = "-lsqlite3"
+import "lsqlite3"
