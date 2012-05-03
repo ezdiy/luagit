@@ -1,5 +1,5 @@
-source "https://github.com/keplerproject/copas.git",
-summary "Coroutine Oriented Portable Asynchronous Services",
+source "https://github.com/keplerproject/copas.git"
+summary "Coroutine Oriented Portable Asynchronous Services"
 detail "Copas is a dispatcher based on coroutines that can be used by"
 detail "TCP/IP servers. It uses LuaSocket as the interface with the"
 detail "TCP/IP stack. A server registered with Copas should provide a"

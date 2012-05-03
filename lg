@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 REPO="http://github.com/ezdiy/luagit.git"
 BASE=~/.luagit
 LUAGIT=$BASE/luagit
@@ -7,9 +7,35 @@ cd $BASE
 if [ ! -d luagit ]; then
 	git clone $REPO
 fi
+
+function do_install()
+{
+	exit
+}
+
+function do_update()
+{
+	RES=""
+
+	function source()
+	{
+		BASE=`basename $1 .git`
+		RES="$BASE $RES"
+	}
+
+	for n in $LUAGIT/spec/*; do
+		. $n 2> /dev/null
+	done
+	echo $RES
+}
+
 case $1 in
 	"update")
 		cd $LUAGIT && git pull
+		do_update
+		;;
+	"install")
+		do_install $2
 		;;
 	*)
 		echo "Unknown command '$1'"
