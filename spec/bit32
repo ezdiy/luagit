@@ -1,6 +1,6 @@
 package "bit32"
 version "5.2.0alpha.1-1"
-source "git+https://github.com/ezdiy/lua-bit32.git"
+source "https://github.com/ezdiy/lua-bit32.git"
 summary "Lua 5.2 bit manipulation library",
 detail "bit32 is the native Lua 5.2 bit manipulation library,"
 detail "backported to Lua 5.1"

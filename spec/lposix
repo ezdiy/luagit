@@ -1,4 +1,4 @@
-source "git+https://github.com/rrthomas/luaposix"
+source "https://github.com/rrthomas/luaposix"
 summary "A POSIX library for Lua."
 detail "A library binding a number of POSIX functions, which supplements the"
 detail "basic set of ANSI C functions provided by the standard Lua libraries."

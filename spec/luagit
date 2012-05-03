@@ -1,0 +1,7 @@
+source "https://github.com/ezdiy/luagit.git"
+summary "Lua port-like package system",
+detail "LuaGIT is ports system for various Lua libraries based on git."
+license "MIT/X11"
+homepage "http://git.lua.cz/"
+depend "lua >= 5.1"
+import "luagit"

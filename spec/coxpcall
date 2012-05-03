@@ -1,4 +1,4 @@
-source "git+https://github.com/keplerproject/coxpcall.git"
+source "https://github.com/keplerproject/coxpcall.git"
 summary "Coroutine safe xpcall and pcall",
 detail "Encapsulates the protected calls with a coroutine based loop, so errors can"
 detail "be dealed without the usual Lua 5.x pcall/xpcall issues with coroutines"

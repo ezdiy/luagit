@@ -1,4 +1,4 @@
-source "git+https://github.com/keplerproject/luafilesystem.git"
+source "https://github.com/keplerproject/luafilesystem.git"
 summary "File System Library for the Lua Programming Language"
 detail "LuaFileSystem is a Lua library developed to complement the set of"
 detail "functions related to file systems offered by the standard Lua"

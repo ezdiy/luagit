@@ -3,5 +3,5 @@ detail "Alien lets a Lua application call load dynamic libraries and call C func
 detail "in a portable way, using libffi."
 license "MIT/X11",
 homepage "http://mascarenhas.github.com/alien"
-source "git+https://github.com/mascarenhas/alien.git"
+source "https://github.com/mascarenhas/alien.git"
 make ""

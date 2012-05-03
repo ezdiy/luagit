@@ -1,4 +1,4 @@
-source "git+https://github.com/Tieske/CopasTimer.git"
+source "https://github.com/Tieske/CopasTimer.git"
 summary "Copas add-on to provide timers, background tasks and optionally events"
 detail "Copas Timer is a module that adds a timer capability to the"
 detail "Copas scheduler. It provides the same base functions step and"

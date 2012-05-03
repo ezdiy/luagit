@@ -1,4 +1,4 @@
-source "git+https://github.com/LuaDist/alt-getopt.git"
+source "https://github.com/LuaDist/alt-getopt.git"
 summary "Process application arguments the same way as getopt_long"
 detail "alt-getopt is a module for Lua programming language for processing"
 detail "application's arguments the same way BSD/GNU getopt_long(3) functions do."
