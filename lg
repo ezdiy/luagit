@@ -83,8 +83,7 @@ function do_install()
 		TODO="$1 $TODO"
 	}
 	cd $REPO/$1
-	. $BASE/spec/$1 
-#2> /dev/null
+	. $BASE/spec/$1 2> /dev/null
 	touch $TMP$1
 	for n in $TODO; do
 		if [ -f $TMP$n ]; then
