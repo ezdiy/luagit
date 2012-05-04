@@ -1,3 +1,4 @@
+source "https://github.com/LuaDist/luasocket.git"
 summary "Network support for the Lua language"
 detail "LuaSocket is a Lua extension library that is composed by two parts: a C core"
 detail "that provides support for the TCP and UDP transport layers, and a set of Lua"
@@ -5,7 +6,7 @@ detail "modules that add support for functionality commonly needed by applicatio
 detail "that deal with the Internet."
 homepage "http://luaforge.net/projects/luasocket/"
 license "MIT"
-make -c src -DSOCKET_SO="socket.so" -DMIME_SO="mime.so"
+make -C src SOCKET_SO="socket.so" MIME_SO="mime.so"
 import "socket" "src/socket.lua"
 import "mime" "src/mime.lua"
 import "ltn12" "src/ltn12.lua"
