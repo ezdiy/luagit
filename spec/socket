@@ -6,7 +6,7 @@ detail "modules that add support for functionality commonly needed by applicatio
 detail "that deal with the Internet."
 homepage "http://luaforge.net/projects/luasocket/"
 license "MIT"
-make -C src SOCKET_SO="socket.so" MIME_SO="mime.so"
+make -C src SOCKET_SO="socket.so" MIME_SO="mime.so" CFLAGS="-I/usr/include/lua5.1"
 import "socket" "src/socket.lua"
 import "mime" "src/mime.lua"
 import "ltn12" "src/ltn12.lua"
