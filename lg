@@ -13,7 +13,7 @@ mkdir -p $REPO
 
 function go()
 {
-	echo "$*"
+#	echo "$*"
 	$*
 }
 
@@ -28,7 +28,12 @@ function do_install()
 		for n in $BASE/spec/*; do
 			do_install `basename $n`
 		done
+		return
 	fi
+	if [ -f "$TMP$1" ]; then
+		return
+	fi
+	echo "Installing '$1'..."
 	function import()
 	{
 		file="$2"
