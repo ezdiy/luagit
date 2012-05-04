@@ -33,7 +33,17 @@ function do_install()
 	if [ -f "$TMP$1" ]; then
 		return
 	fi
+	nn="$1"
 	echo "Installing '$1'..."
+	function do_configure()
+	{
+		echo $BASE/repo/$nn
+		cd $BASE/repo/$nn
+		if [ ! -f configure ]; then
+			./bootstrap
+		fi
+		./configure
+	}
 	function import()
 	{
 		file="$2"
@@ -61,7 +71,8 @@ function do_install()
 		TODO="$1 $TODO"
 	}
 	cd $REPO/$1
-	. $BASE/spec/$1 2> /dev/null
+	. $BASE/spec/$1
+# 2> /dev/null
 	touch $TMP$1
 	for n in $TODO; do
 		if [ -f $TMP$n ]; then
