@@ -15,7 +15,7 @@ mkdir -p $REPO
 
 function go()
 {
-#	echo "$*"
+	echo "$*"
 	$*
 }
 
@@ -74,6 +74,7 @@ function do_install()
 				go gcc -fPIC -O2 $CFLAGS -c "$fn" -o "$fo"
 				all="$fo $all"
 			done
+			mkdir -p `dirname "$LIB/$fl"`
 			go gcc -shared -fpic $LDFLAGS $all -o "$LIB/$fl.so"
 		fi
 	}

@@ -4,6 +4,7 @@ detail "in a portable way, using libffi."
 license "MIT/X11"
 homepage "http://mascarenhas.github.com/alien"
 source "https://github.com/mascarenhas/alien.git"
+LDFLAGS=-lffi
 import "alien.core" "src/alien/core.c"
 import "alien.struct" "src/alien/struct.c"
 import "alien" "src/alien.lua"
