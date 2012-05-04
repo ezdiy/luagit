@@ -17,10 +17,10 @@ function do_install()
 		ext=${file##*.} 
 		fl=`echo "$1" | sed -e 's#\.#/#g'`
 		if [ $ext == "lua" ]; then
-			echo mkdir -p `dirname "$LIB/$fl"`
-			echo cp -f "$2" "$LIB/$fl.lua"
+			mkdir -p `dirname "$LIB/$fl"`
+			cp -f "$2" "$LIB/$fl.lua"
 		elif [ "$ext" == "so" ]; then
-			echo cp -f "$2" "$LIB/$fl.$ext"
+			cp -f "$2" "$LIB/$fl.$ext"
 		fi
 	}
 	cd $REPO/$1
