@@ -8,5 +8,5 @@ detail "we expect from a pattern-matching library (and more, as we can"
 detail "define entire grammars)."
 homepage "http://www.inf.puc-rio.br/~roberto/lpeg.html"
 license = "MIT/X11"
-import "lpeg" "lpeg.c",
+import "lpeg" "lpeg.c"
 import "lpeg.re" "re.lua"
