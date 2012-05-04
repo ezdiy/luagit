@@ -9,6 +9,12 @@ fi
 cd $BASE
 mkdir -p $REPO
 
+function go()
+{
+	echo "$*"
+	$1 $2-
+}
+
 function do_install()
 {
 	function import()
@@ -22,6 +28,15 @@ function do_install()
 		elif [ "$ext" == "so" ]; then
 			mkdir -p `dirname "$LIB/$fl"`
 			cp -f "$2" "$LIB/$fl.$ext"
+		elif [ "$ext" == "c" ]; then
+			shift
+			all=""
+			for fn in $*; do
+				fo="${fn%.*}.o"
+				go gcc -fPIC -O2 $CFLAGS -c "$fn" -o "$fo"
+				all="$fo $all"
+			done
+			go gcc -shared -fpic $LDFLAGS $all -o "$LIB/$fl.so"
 		fi
 	}
 	cd $REPO/$1
