@@ -6,7 +6,7 @@ detail "POSIX is a Portable Operating System Interface standard defined by IEEE.
 homepage "http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/#lposix"
 license "Public domain"
 do_configure
-LDFLAGS="-lcurses -lpthread -lrt"
+LDFLAGS="-lcurses -lpthread -lrt -lcrypt"
 import "curses_c" "lcurses.c"
 import "posix_c" "lposix.c"
 import "curses" "curses.lua"
