@@ -15,7 +15,7 @@ mkdir -p $REPO
 
 function go()
 {
-#	echo "$*"
+	echo "$*"
 	$*
 }
 
