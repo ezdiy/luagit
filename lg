@@ -4,6 +4,8 @@ BASE=~/dev/.luagit
 REPO=$BASE/repo
 LIB=$BASE/lib
 TMP=/tmp/$$/
+CPPFLAGS='-I/usr/include/lua5.1 -I.'
+CFLAGS='-O2 -I/usr/include/lua5.1 -I.'
 mkdir -p $TMP
 if [ ! -d $BASE ]; then
 	git clone $SRC $BASE
@@ -37,13 +39,16 @@ function do_install()
 	echo "Installing '$1'..."
 	function do_configure()
 	{
-		echo $BASE/repo/$nn
+		wd=`pwd`
 		cd $BASE/repo/$nn
 		if [ ! -f configure ]; then
 			./bootstrap
 		fi
-		# XXX todo, what about others than debian/ubuntu?
-		CPPFLAGS='-I/usr/include/lua5.1' ./configure --libdir=/usr/local/lib/lua/5.1 --datadir=/usr/local/share/lua/5.1 --with-lua-suffix=5.1
+		if [ ! -f config.h ]; then
+			# XXX todo, what about others than debian/ubuntu?
+			CPPFLAGS='-I/usr/include/lua5.1' ./configure --libdir=/usr/local/lib/lua/5.1 --datadir=/usr/local/share/lua/5.1 --with-lua-suffix=5.1
+		fi
+		cd $wd
 	}
 	function import()
 	{
@@ -72,8 +77,7 @@ function do_install()
 		TODO="$1 $TODO"
 	}
 	cd $REPO/$1
-	. $BASE/spec/$1
-# 2> /dev/null
+	. $BASE/spec/$1 2> /dev/null
 	touch $TMP$1
 	for n in $TODO; do
 		if [ -f $TMP$n ]; then
