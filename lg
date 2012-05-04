@@ -3,6 +3,8 @@ SRC="http://github.com/ezdiy/luagit.git"
 BASE=~/.luagit
 REPO=$BASE/repo
 LIB=$BASE/lib
+TMP=/tmp/$$/
+mkdir -p $TMP
 if [ ! -d $BASE ]; then
 	git clone $SRC $BASE
 fi
@@ -12,11 +14,21 @@ mkdir -p $REPO
 function go()
 {
 	echo "$*"
-	$1 $2-
+	$*
 }
 
 function do_install()
 {
+	if [ -z "$1" ]; then
+		echo -n "Really install all `echo $BASE/spec/*|wc -w` packages? [y/N]"
+		read -n 1 resp
+		if [ "$resp" != "y" ]; then
+			return
+		fi
+		for n in $BASE/spec/*; do
+			do_install `basename $n`
+		done
+	fi
 	function import()
 	{
 		file="$2"
@@ -39,14 +51,26 @@ function do_install()
 			go gcc -shared -fpic $LDFLAGS $all -o "$LIB/$fl.so"
 		fi
 	}
+	function depend()
+	{
+		TODO="$1 $TODO"
+	}
 	cd $REPO/$1
-	. $BASE/spec/$1 
+	. $BASE/spec/$1 2> /dev/null
+	touch $TMP$1
+	for n in $TODO; do
+		if [ -f $TMP$n ]; then
+			continue
+		fi
+		do_install $n
+	done
 #2>/dev/null
 }
 
 function do_update()
 {
 	INPUT=""
+	TODO=""
 	function source()
 	{
 		DIR=`basename $INPUT`
@@ -78,6 +102,7 @@ case $1 in
 		;;
 	"install")
 		do_install $2
+		rm -rf $TMP
 		;;
 	*)
 		echo "Unknown command '$1'"
