@@ -75,7 +75,7 @@ function do_install()
 				all="$fo $all"
 			done
 			mkdir -p `dirname "$LIB/$fl"`
-			go gcc -shared -fpic $LDFLAGS $all -o "$LIB/$fl.so"
+			go gcc -shared -fpic $all -o "$LIB/$fl.so" $LDFLAGS
 		fi
 	}
 	function depend()

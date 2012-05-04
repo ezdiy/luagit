@@ -7,5 +7,5 @@ detail "However, most sqlite3 functions are called via an object-oriented interf
 detail "either database or SQL statement objects."
 license "MIT/X11",
 homepage "http://lua.sqlite.org/"
-LDFLAGS = "-lsqlite3"
+LDFLAGS="-lsqlite -lsqlite3"
 import "lsqlite3" "lsqlite3.c"
