@@ -42,7 +42,8 @@ function do_install()
 		if [ ! -f configure ]; then
 			./bootstrap
 		fi
-		./configure
+		# XXX todo, what about others than debian/ubuntu?
+		CPPFLAGS='-I/usr/include/lua5.1' ./configure --libdir=/usr/local/lib/lua/5.1 --datadir=/usr/local/share/lua/5.1 --with-lua-suffix=5.1
 	}
 	function import()
 	{
