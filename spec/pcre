@@ -1,3 +1,4 @@
+source "https://github.com/rrthomas/lrexlib.git"
 summary "Lua binding of the PCRE regular expression library.",
 detail "Lrexlib is a regular expression library for Lua 5.1, which"
 detail "provides bindings for POSIX and PCRE regular expression libraries."
