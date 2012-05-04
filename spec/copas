@@ -7,7 +7,7 @@ detail "handler for requests and use Copas socket functions to send"
 detail "the response. Copas loops through requests and invokes the"
 detail "corresponding handlers. For a full implementation of a Copas"
 detail "HTTP server you can refer to Xavante as an example. "
-license "MIT/X11",
+license "MIT/X11"
 homepage "http://www.keplerproject.org/copas/"
 depend "lua >= 5.1"
 depend "luasocket"

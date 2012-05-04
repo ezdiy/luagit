@@ -1,37 +1,55 @@
 #!/bin/bash
-REPO="http://github.com/ezdiy/luagit.git"
+SRC="http://github.com/ezdiy/luagit.git"
 BASE=~/.luagit
-LUAGIT=$BASE/luagit
-mkdir -p $BASE
-cd $BASE
-if [ ! -d luagit ]; then
-	git clone $REPO
+REPO=$BASE/repo
+if [ ! -d $BASE ]; then
+	echo git clone $SRC $BASE
+	git clone $SRC $BASE
 fi
+cd $BASE
+mkdir -p $REPO
 
 function do_install()
 {
-	exit
+	function import()
+	{
+		return
+	}
+	cd $REPO/$1
+	$BASE/spec/$1
+#2>/dev/null
 }
 
 function do_update()
 {
-	RES=""
-
+	INPUT=""
 	function source()
 	{
-		BASE=`basename $1 .git`
-		RES="$BASE $RES"
+		DIR=`basename $INPUT`
+		if [ ! -d "$REPO/$DIR" ]; then
+			(git clone $1 $REPO/$DIR > /dev/null; echo -n "#")&
+		else
+			(cd $REPO/$DIR; git pull > /dev/null; echo -n "#")&
+		fi
 	}
 
-	for n in $LUAGIT/spec/*; do
+	echo "Updating packages"
+	echo -n "["
+	for n in $BASE/spec/*; do echo -n .; done
+	echo -ne "]\r["
+
+	for n in $BASE/spec/*; do
+		INPUT=$n
 		. $n 2> /dev/null
 	done
-	echo $RES
+	wait
+	echo "] OK!"
 }
 
 case $1 in
 	"update")
-		cd $LUAGIT && git pull
+		echo -n "Updating LuaGIT.."
+		cd $BASE && git pull
 		do_update
 		;;
 	"install")
