@@ -9,4 +9,4 @@ license "MIT/X11",
 homepage "http://lua.sqlite.org/"
 depend "lua >= 5.1"
 LDFLAGS = "-lsqlite3"
-import "lsqlite3"
+import "lsqlite3" "lsqlite3.c"

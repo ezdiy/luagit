@@ -2,8 +2,8 @@
 SRC="http://github.com/ezdiy/luagit.git"
 BASE=~/.luagit
 REPO=$BASE/repo
+LIB=$BASE/lib
 if [ ! -d $BASE ]; then
-	echo git clone $SRC $BASE
 	git clone $SRC $BASE
 fi
 cd $BASE
@@ -13,10 +13,16 @@ function do_install()
 {
 	function import()
 	{
-		return
+		file="$2"
+		ext=${file##*.} 
+		if [ -z "$3" ]; then
+			fl=`echo "$1" | sed -e 's#\.#/#g'`
+			mkdir -p `dirname "$LIB/$fl"`
+			cp -f "$2" "$LIB/$fl.lua"
+		fi
 	}
 	cd $REPO/$1
-	$BASE/spec/$1
+	. $BASE/spec/$1 
 #2>/dev/null
 }
 
