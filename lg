@@ -1,6 +1,6 @@
 #!/bin/bash
 SRC="http://github.com/ezdiy/luagit.git"
-BASE=~/.luagit
+BASE=~/dev/.luagit
 REPO=$BASE/repo
 LIB=$BASE/lib
 TMP=/tmp/$$/

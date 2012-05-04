@@ -5,6 +5,7 @@ detail "basic set of ANSI C functions provided by the standard Lua libraries."
 detail "POSIX is a Portable Operating System Interface standard defined by IEEE."
 homepage "http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/#lposix"
 license "Public domain"
+LUA_INCLUDE=/usr/include/lua5.1
 do_configure
 import "curses_c" "lcurses.c"
 import "posix_c" "lposix.c"
