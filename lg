@@ -1,17 +1,41 @@
 #!/bin/bash
 SRC="http://github.com/ezdiy/luagit.git"
 BASE=~/dev/.luagit
+MYSELF=$(readlink -f $0)
 REPO=$BASE/repo
 LIB=$BASE/lib
 TMP=/tmp/$$/
 CPPFLAGS='-I/usr/include/lua5.1 -I.'
 CFLAGS='-O2 -I/usr/include/lua5.1 -I.'
-mkdir -p $TMP
-if [ ! -d $BASE ]; then
-	git clone $SRC $BASE
+
+if [ "$MYSELF" != "$BASE/lg" ]; then
+	if [ ! -f "$BASE/lg" ]; then
+		echo "Attempting to fetch copy of LuaGIT into $BASE..."
+		if [ ! -f "$BASE/lg" ]; then
+			git clone $SRC $BASE || exit 1
+		fi
+	fi
+	echo "Running from $MYSELF, handing control over to $BASE/lg..."
+	exec "$BASE/lg" $*
+else
+	CMD="update"
 fi
-cd $BASE
-mkdir -p $REPO
+cd "$BASE"
+mkdir -p $TMP
+
+function get_ver()
+{
+	wd=`pwd`
+	cd "$BASE/repo/$1"
+	vh=`git log -n1 --pretty=format:%h%d`
+	vn=`git log --pretty=format:%h%d | wc -l`
+	cd "$wd"
+	echo "v$vn-git$vh"
+}
+
+echo "--------------------------------------------------------"
+echo "LuaGIT `get_ver`"
+echo "--------------------------------------------------------"
 
 function go()
 {
@@ -21,26 +45,12 @@ function go()
 
 function do_install()
 {
-	if [ -z "$1" ]; then
-		echo -n "Really install all `echo $BASE/spec/*|wc -w` packages? [y/N]"
-		read -n 1 resp
-		if [ "$resp" != "y" ]; then
-			return
-		fi
-		for n in $BASE/spec/*; do
-			do_install `basename $n`
-		done
-		return
-	fi
-	if [ -f "$TMP$1" ]; then
-		return
-	fi
-	nn="$1"
-	echo "Installing '$1'..."
+	pkname="$1"
+	echo "Installing '$pkname'..."
 	function do_configure()
 	{
 		wd=`pwd`
-		cd $BASE/repo/$nn
+		cd $BASE/repo/$pkname
 		if [ ! -f configure ]; then
 			./bootstrap
 		fi
@@ -59,7 +69,7 @@ function do_install()
 	{
 		file="$2"
 		ext=${file##*.} 
-		fl=`echo "$1" | sed -e 's#\.#/#g'`
+		fl=`echo "$pkname" | sed -e 's#\.#/#g'`
 		if [ $ext == "lua" ]; then
 			mkdir -p `dirname "$LIB/$fl"`
 			cp -f "$2" "$LIB/$fl.lua"
@@ -92,6 +102,15 @@ function do_install()
 		do_install $n
 	done
 #2>/dev/null
+}
+
+function get_uniq()
+{
+	echo "$*" | tr " " "\n" | sort | uniq
+}
+
+function do_depend()
+{
 }
 
 function do_update()
@@ -128,12 +147,42 @@ case $1 in
 		do_update
 		;;
 	"install")
-		do_install $2
-		rm -rf $TMP
+		shift
+		pkglist="$*"
+		if [ -z "$pkglist" ]; then
+			echo -n "No package name(s) given, really install all `echo $BASE/spec/*|wc -w` packages? [y/N]"
+			read -n 1 resp
+			echo $resp
+			if [ "$resp" != "y" ]; then
+				return
+			fi
+			for n in $BASE/spec/*; do
+				do_install `basename $n`
+			done
+			return
+		else
+			deps=`(for pkg in $pkglist do; do_depend $pkg;done)`
+			for n in `get_uniq "$pkglist $deps"`; do
+				do_install "$n"
+			done
+		fi
 		;;
+	"list")
+		echo "List of installed packages"
+		for n in $BASE/sentinel/*; do
+			pn=`basename $n`
+			iver=`get_ver $n`
+			cver=`get_ver $BASE/repo/$pn`
+			if [ "$cver" != "$iver" ]; then
+				echo " $pn $iver, newest is $cver"
+			else
+				echo " $pn $iver"
+			fi
+		done
 	*)
 		echo "Unknown command '$1'"
 		exit 1
 		;;
 esac
 
+rm -rf $TMP
