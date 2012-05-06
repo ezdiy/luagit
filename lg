@@ -64,6 +64,10 @@ function do_install()
 		wd=`pwd`
 		cd $wd
 	}
+	function import_all()
+	{
+		go cp -vaf $1 $LIB
+	}
 	function import()
 	{
 		file="$2"
@@ -152,7 +156,6 @@ case $1 in
 			for n in $BASE/spec/*; do
 				do_install `basename $n`
 			done
-			return
 		else
 			deps=`(for pkg in $pkglist; do do_depend $pkg; done)`
 			for n in `get_uniq "$pkglist $deps"`; do
@@ -174,7 +177,9 @@ case $1 in
 		done
 		;;
 	*)
-		echo "Unknown command '$1'"
+		if [ ! -z "$1" ]; then
+			echo "Unknown command '$1'"
+		fi
 cat<<_eof
 Valid commands:
 	update	Update LuaGIT and package source code database

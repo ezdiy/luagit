@@ -3,4 +3,4 @@ summary "A Lua library for packing and unpacking binary data, supporting arbitra
 detail "VStruct is a library for Lua 5.1. It provides functions for manipulating binary data,"
 detail "in particular for unpacking binary files or byte buffers into Lua values and for packing"
 detail "Lua values back into files or buffers.
-cp -va "struct" $BASE
+import_all vstruct/*
