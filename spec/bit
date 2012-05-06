@@ -1,0 +1,7 @@
+source "https://github.com/LuaDist/luabitop.git"
+summary "Mike Pall's bit ops library"
+detail "Lua BitOp is a C extension module for Lua 5.1 which adds"
+detail "bitwise operations on numbers."
+license "MIT/X11"
+homepage "http://bitop.luajit.org"
+import "bit" "bit.c"
