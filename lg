@@ -8,7 +8,7 @@ TMP=/tmp/$$/
 CPPFLAGS='-I/usr/include/lua5.1 -I.'
 CFLAGS='-O2 -I/usr/include/lua5.1 -I.'
 
-if [ "$MYSELF" != "$BASE/lg" ]; then
+if [ "$MYSELF" != "$BASE/lg" ] && [ -z "$LG_DEBUG" ]; then
 	if [ ! -f "$BASE/lg" ]; then
 		echo "Attempting to fetch copy of LuaGIT into $BASE..."
 		if [ ! -f "$BASE/lg" ]; then
@@ -17,8 +17,6 @@ if [ "$MYSELF" != "$BASE/lg" ]; then
 	fi
 	echo "Running from $MYSELF, handing control over to $BASE/lg..."
 	exec "$BASE/lg" $*
-else
-	CMD="update"
 fi
 cd "$BASE"
 mkdir -p $TMP
@@ -33,10 +31,10 @@ function get_ver()
 	echo "v$vn-git$vh"
 }
 
-echo "--------------------------------------------------------------------"
+echo "------------------------------------------------------------------------"
 echo " LuaGIT: `get_ver`"
 echo "  Using: $SRC"
-echo "--------------------------------------------------------------------"
+echo "------------------------------------------------------------------------"
 
 function go()
 {
@@ -89,19 +87,8 @@ function do_install()
 			go gcc -shared -fpic $all -o "$LIB/$fl.so" $LDFLAGS
 		fi
 	}
-	function depend()
-	{
-		TODO="$1 $TODO"
-	}
 	cd $REPO/$1
 	. $BASE/spec/$1 2> /dev/null
-	touch $TMP$1
-	for n in $TODO; do
-		if [ -f $TMP$n ]; then
-			continue
-		fi
-		do_install $n
-	done
 #2>/dev/null
 }
 
@@ -112,6 +99,11 @@ function get_uniq()
 
 function do_depend()
 {
+	function depend()
+	{
+		echo $1
+	}
+	. $BASE/spec/$1 2> /dev/null
 }
 
 function do_update()
@@ -180,6 +172,7 @@ case $1 in
 				echo " $pn $iver"
 			fi
 		done
+		;;
 	*)
 		echo "Unknown command '$1'"
 		exit 1
