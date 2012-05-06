@@ -1,5 +1,5 @@
 source "https://github.com/agentzh/lua-resty-mysql.git"
-description "Nonblocking Lua MySQL driver library"
+summary "Nonblocking Lua MySQL driver library"
 detail "This library is considered experimental and still under active development."
 detail "The API is still in flux and may change without notice."
 detail "lsqlite3 is a thin wrapper around the public domain SQLite3 database engine."

@@ -1,6 +1,10 @@
 #!/bin/bash
 SRC="http://github.com/ezdiy/luagit.git"
-BASE=~/dev/.luagit
+if [ -z "$LG_DEBUG" ]; then
+	BASE=~/dev/.luagit
+else
+	BASE=`pwd`
+fi
 MYSELF=$(readlink -f $0)
 REPO=$BASE/repo
 LIB=$BASE/lib
@@ -38,7 +42,7 @@ echo "------------------------------------------------------------------------"
 
 function go()
 {
-	echo "$*"
+	#echo "$*"
 	$*
 }
 
@@ -66,14 +70,20 @@ function do_install()
 	}
 	function import_all()
 	{
-		go cp -vaf $1 $LIB
+		go cp -af $* $LIB
 	}
+	function depend() { return; }
+	function source() { return; }
+	function summary() { return; }
+	function detail() { return; }
+	function homepage() { return; }
+	function license() { return; }
 	function import()
 	{
 		file="$2"
 		ext=${file##*.} 
 		fl=`echo "$1" | sed -e 's#\.#/#g'`
-		if [ $ext == "lua" ]; then
+		if [ "$ext" == "lua" ]; then
 			mkdir -p `dirname "$LIB/$fl"`
 			go cp -f "$file" "$LIB/$fl.lua"
 		elif [ "$ext" == "so" ]; then
@@ -92,8 +102,7 @@ function do_install()
 		fi
 	}
 	cd $REPO/$1
-	. $BASE/spec/$1 2> /dev/null
-#2>/dev/null
+	. $BASE/spec/$1
 }
 
 function get_uniq()
