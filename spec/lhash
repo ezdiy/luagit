@@ -2,4 +2,4 @@ source https://github.com/ezdiy/lhash
 summary "library for cryptographic hashing primitives"
 license GPL
 import lhash md5.c sha1.c sha2.c lhash.c rand.c crc32.c
-import lhash/hmac lhash/hmac.lua
+import lhash.hmac lhash/hmac.lua
