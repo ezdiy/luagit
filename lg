@@ -33,7 +33,7 @@ function get_ver()
 
 echo "------------------------------------------------------------------------"
 echo " LuaGIT: `get_ver`"
-echo "  Using: $SRC"
+echo "   repo: $SRC"
 echo "------------------------------------------------------------------------"
 
 function go()
@@ -154,7 +154,7 @@ case $1 in
 			done
 			return
 		else
-			deps=`(for pkg in $pkglist do; do_depend $pkg;done)`
+			deps=`(for pkg in $pkglist; do do_depend $pkg; done)`
 			for n in `get_uniq "$pkglist $deps"`; do
 				do_install "$n"
 			done
@@ -175,6 +175,15 @@ case $1 in
 		;;
 	*)
 		echo "Unknown command '$1'"
+cat<<_eof
+Valid commands:
+	update	Update LuaGIT and package source code database
+	install [pkgname] [pkgname...]
+		Install package(s)
+	upgrade [pkgname] [pkgname...]
+		Upgrade package(s) to newer version
+	list	List installed packages
+_eof
 		exit 1
 		;;
 esac
