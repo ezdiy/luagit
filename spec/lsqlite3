@@ -1,5 +1,5 @@
 source "https://github.com/LuaDist/lsqlite3.git"
-description "A binding for Lua to the SQLite3 database library"
+summary "A binding for Lua to the SQLite3 database library"
 detail "lsqlite3 is a thin wrapper around the public domain SQLite3 database engine. "
 detail "The lsqlite3 module supports the creation and manipulation of SQLite3 databases. "
 detail "After a require('lsqlite3') the exported functions are called with prefix sqlite3. "
