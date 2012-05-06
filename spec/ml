@@ -1,0 +1,10 @@
+summary "A Small but Useful Lua library"
+detail "Microlight is an attempt at 'library golf', by analogy to the popular"
+detail "nerd sport 'code golf'. The idea here is to try capture some of these"
+detail "functions in one place and document them well enough so that it is"
+detail "easier to use them than to write them yourself.
+license "MIT"
+homepage "http://stevedonovan.github.com/microlight/"
+source "https://github.com/stevedonovan/Microlight.git"
+import "ml" "ml.lua"
+import "mlx" "mlx.lua"
