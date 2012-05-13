@@ -8,21 +8,22 @@ else
 	LOG=/tmp/log
 fi
 MYSELF=$(readlink -f $0)
+BMYSELF=$(readlink -f $BASE/lg)
 REPO=$BASE/repo
 LIB=$BASE/lib
 TMP=/tmp/$$/
 CPPFLAGS='-I/usr/include/lua5.1 -I.'
 CFLAGS='-O2 -I/usr/include/lua5.1 -I.'
 
-if [ "$MYSELF" != "$BASE/lg" ] && [ -z "$LG_DEBUG" ]; then
-	if [ ! -f "$BASE/lg" ]; then
+if [ "$MYSELF" != "$BMYSELF" ] && [ -z "$LG_DEBUG" ]; then
+	if [ ! -f "$BMYSELF" ]; then
 		echo "Attempting to fetch copy of LuaGIT into $BASE..."
-		if [ ! -f "$BASE/lg" ]; then
+		if [ ! -f "$BMYSELF" ]; then
 			git clone $SRC $BASE || exit 1
 		fi
 	fi
-	echo "Running from $MYSELF, handing control over to $BASE/lg..."
-	exec "$BASE/lg" $*
+	echo "Running from $MYSELF, handing control over to $BMYSELF..."
+	exec "$BMYSELF" $*
 fi
 cd "$BASE"
 mkdir -p $TMP
