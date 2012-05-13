@@ -21,6 +21,7 @@ if [ "$MYSELF" != "$BMYSELF" ] && [ -z "$LG_DEBUG" ]; then
 		if [ ! -f "$BMYSELF" ]; then
 			git clone $SRC $BASE || exit 1
 		fi
+		BMYSELF=$(readlink -f $BASE/lg)
 	fi
 	echo "Running from $MYSELF, handing control over to $BMYSELF..."
 	exec "$BMYSELF" $*
