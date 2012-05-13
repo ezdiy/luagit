@@ -1,9 +1,11 @@
 #!/bin/bash
 SRC="http://github.com/ezdiy/luagit.git"
 if [ -z "$LG_DEBUG" ]; then
-	BASE=~/dev/.luagit
+	BASE=~/.luagit
+	LOG=/dev/null
 else
 	BASE=`pwd`
+	LOG=/tmp/log
 fi
 MYSELF=$(readlink -f $0)
 REPO=$BASE/repo
@@ -116,7 +118,7 @@ function do_depend()
 	{
 		echo $1
 	}
-	. $BASE/spec/$1 2> /dev/null
+	. $BASE/spec/$1 2> $LOG
 }
 
 function do_update()
@@ -127,9 +129,9 @@ function do_update()
 	{
 		DIR=`basename $INPUT`
 		if [ ! -d "$REPO/$DIR" ]; then
-			(git clone $1 $REPO/$DIR > /dev/null; echo -n "#")&
+			(git clone $1 $REPO/$DIR > $LOG; echo -n "#")&
 		else
-			(cd $REPO/$DIR; git pull > /dev/null; echo -n "#")&
+			(cd $REPO/$DIR; git pull > $LOG; echo -n "#")&
 		fi
 	}
 
@@ -140,7 +142,7 @@ function do_update()
 
 	for n in $BASE/spec/*; do
 		INPUT=$n
-		. $n 2> /dev/null
+		. $n 2> $LOG
 	done
 	wait
 	echo "] OK!"
