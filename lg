@@ -1,7 +1,7 @@
 #!/bin/bash
 SRC="http://github.com/ezdiy/luagit.git"
 if [ -z "$LG_DEBUG" ]; then
-	BASE=~/.luagit
+	BASE=~/dev/.luagit
 	LOG=/dev/null
 else
 	BASE=`pwd`
